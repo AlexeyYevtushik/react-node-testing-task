@@ -38,12 +38,12 @@ function Items({ token }) {
         {items.map(item => (
           <li key={item.id}>
             {item.name}{": "}
-            <button onClick={() => navigate(`/items/${item.id}/edit`)}>Edit</button>
-            <button onClick={() => handleDelete(item.id)}>Delete</button>
+            <button testid="edit-button" onClick={() => navigate(`/items/${item.id}/edit`)}>Edit</button>
+            <button testid="delete-button" onClick={() => handleDelete(item.id)}>Delete</button>
           </li>
         ))}
       </ul>
-      <Link to="/items/new/edit">add new</Link>
+      <Link testid="add-new-button" to="/items/new/edit">add new</Link>
     </div>
   );
 }

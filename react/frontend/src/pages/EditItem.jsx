@@ -43,6 +43,7 @@ function EditItem({ token }) {
         <div>
           <label>Name:</label>
           <input 
+            testid="input-name"
             type="text" 
             value={name} 
             onChange={e => setName(e.target.value)} 
@@ -51,13 +52,14 @@ function EditItem({ token }) {
         </div>
         <div>
           <label>Description:</label>
-          <textarea 
+          <textarea
+            testid="input-description" 
             value={description} 
             onChange={e => setDescription(e.target.value)} 
           />
         </div>
-        <button type="submit">{isNew ? 'Create' : 'Save'}</button>
-        <button type="button" onClick={() => navigate('/items')}>Cancel</button>
+        <button testid="submit-button" type="submit">{isNew ? 'Create' : 'Save'}</button>
+        <button testid="cancel-button" type="button" onClick={() => navigate('/items')}>Cancel</button>
       </form>
     </div>
   );

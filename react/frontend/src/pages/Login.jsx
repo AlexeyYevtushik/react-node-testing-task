@@ -28,7 +28,8 @@ function Login({ setToken }) {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Username:</label>
-          <input 
+          <input
+            testid="input-username" 
             type="text" 
             value={username} 
             onChange={e => setUsername(e.target.value)} 
@@ -38,13 +39,14 @@ function Login({ setToken }) {
         <div>
           <label>Password:</label>
           <input 
+            testid="input-password"
             type="password" 
             value={password} 
             onChange={e => setPassword(e.target.value)} 
             required 
           />
         </div>
-        <button type="submit">Login</button>
+        <button testid="submit-button" type="submit">Login</button>
       </form>
     </div>
   );
