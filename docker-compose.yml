@@ -1,0 +1,41 @@
+name: testing_ex         
+version: "3.9"              
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - JWT_SECRET=your-secret-key
+    networks:
+      - app-net             
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://backend:3000  
+    depends_on:
+      - backend
+    networks:
+      - app-net
+
+  tests:
+    build:
+      context: ./tests
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+      - frontend
+    environment:
+      - NODE_ENV=test
+    networks:
+      - app-net
+
+networks:
+  app-net:                   
+    driver: bridge

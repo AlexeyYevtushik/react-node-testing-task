@@ -30,12 +30,6 @@ Both positive and negative scenarios are included.
 - *(Optional)* GitHub Actions for CI, report artifacts upload.
 - *(Optional)* Coverage tools (nyc/istanbul) for backend unit tests; visual snapshots with `expect(page).toHaveScreenshot()`.
 
-## 4. How to Run
-```bash
-npm i
-# Start your backend (e.g. http://localhost:3000) and frontend (http://localhost:5173)
-# Optionally export env vars:
-# export BASE_URL=http://localhost:5173
-# export API_URL=http://localhost:3000
-npm test
-npm run report   # open HTML report
+## 4. How to Run Tests
+docker build -t tests . 
+docker run tests

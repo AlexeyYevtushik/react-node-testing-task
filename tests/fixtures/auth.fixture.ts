@@ -1,7 +1,8 @@
 import { test as base, expect as pwExpect, request as pwRequest } from '@playwright/test';
 import type { APIRequestContext } from '@playwright/test';
 
-const API_BASE = 'http://localhost:3000';
+const API_BASE = 'http://backend:3000';
+const UI_BASE = 'http://frontend:5173';
 const LOGIN_PATH = '/login';
 const ITEMS_PATH = '/items';
 

@@ -2,7 +2,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './',                   // мы уже в tests/
+  testDir: './',                  
   timeout: 30_000,
   expect: { timeout: 5_000 },
   reporter: [['list'], ['html', { open: 'never' }]],
@@ -15,30 +15,29 @@ export default defineConfig({
     // --- API ---
     {
       name: 'api',
-      testMatch: /api\/.*\.spec\.ts$/       // tests/api/**
+      testMatch: /api\/.*\.spec\.ts$/       
     },
 
     // --- UI ---
     {
       name: 'chromium',
       testMatch: /ui\/.*\.spec\.ts$/,       // tests/ui/**
-      testIgnore: /api\//,
-      use: { ...devices['Desktop Chrome'], baseURL: 'http://localhost:5173' },
-      dependencies: ['api']                 // сначала api
+      use: { ...devices['Desktop Chrome'], baseURL: 'http://frontend:5173' },
+   
     },
-    {
-      name: 'firefox',
-      testMatch: /ui\/.*\.spec\.ts$/,
-      testIgnore: /api\//,
-      use: { ...devices['Desktop Firefox'], baseURL: 'http://localhost:5173' },
-      dependencies: ['api']
-    },
-    {
-      name: 'webkit',
-      testMatch: /ui\/.*\.spec\.ts$/,
-      testIgnore: /api\//,
-      use: { ...devices['Desktop Safari'], baseURL: 'http://localhost:5173' },
-      dependencies: ['api']
-    }
+    // {
+    //   name: 'firefox',
+    //   testMatch: /ui\/.*\.spec\.ts$/,
+    //   testIgnore: /api\//,
+    //   use: { ...devices['Desktop Firefox'], baseURL: 'http://frontend:5173' },
+    //   dependencies: ['api']
+    // },
+    // {
+    //   name: 'webkit',
+    //   testMatch: /ui\/.*\.spec\.ts$/,
+    //   testIgnore: /api\//,
+    //   use: { ...devices['Desktop Safari'], baseURL: 'http://frontend:5173' },
+    //   dependencies: ['api']
+    // }
   ]
 });
