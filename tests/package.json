@@ -2,12 +2,10 @@
   "name": "react-node-playwright-tests",
   "version": "1.0.0",
   "scripts": {
-    "test": "playwright test",
-    "test:ui": "playwright test tests/ui",
-    "test:api": "playwright test tests/api",
-    "test:headed": "playwright test --headed",
-    "codegen": "playwright codegen http://localhost:5173",
-    "report": "playwright show-report"
+    "test:api": "npx playwright test --project=api",
+    "test:ui": "npx playwright test --project=chromium",
+    "test:all": "npm run test:api && npm run test:ui",
+    "report": "npx playwright show-report"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.1",
