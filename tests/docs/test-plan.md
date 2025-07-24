@@ -28,8 +28,7 @@ Both positive and negative scenarios are included.
 - **Playwright (@playwright/test)**: unified UI + API testing, fast parallel runs, built‑in trace/screenshot/video for debugging.
 - **TypeScript**: static typing, better DX.
 - *(Optional)* GitHub Actions for CI, report artifacts upload.
-- *(Optional)* Coverage tools (nyc/istanbul) for backend unit tests; visual snapshots with `expect(page).toHaveScreenshot()`.
+toHaveScreenshot()`.
 
 ## 4. How to Run Tests
-docker build -t tests . 
-docker run tests
+docker-compose.exe up tests
