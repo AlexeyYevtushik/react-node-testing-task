@@ -1,93 +1,55 @@
-Minimal React + Node.js Demo
+# Todo Demo – **CI‑first** Edition
 
-Two services in Docker: backend (Node/Express, JWT, CRUD) and frontend (React/Vite SPA).
+Tiny full‑stack app (React + Express) built to **showcase automated QA**.  
+All tests run **inside Docker** and in GitHub Actions with one click.
 
-1. Quick Start
+---
 
+## ① Run Locally (Docker Compose, < 2 min)
 
-docker-compose up --build -d
+docker-compose tests 
 
-front-end: http://frontend:5173
-back-end:  http://backend:5173
+## ② CI / CD
 
-2. Environment Variables
+A ready‑made workflow **.github/workflows/ci.yml** triggers on:
 
-Service   Variable     Default value
-backend   JWT_SECRET   your-secret-key
-frontend  VITE_API_URL http://backend:3000
+* `push` (any branch)  
+* `pull_request`  
+* manual **Run workflow** button
 
-Change them via docker-compose.yml or an .env file if you wish.
+The job simply re‑uses the compose file:
 
-3. API Contracts
+```yaml
+- run: docker compose up --build --exit-code-from tester
+```
 
-Authentication
-POST /login
-Body: {"username":"admin","password":"admin"}
-200 → {"token":"<JWT>"}
-401 → {"message":"Invalid credentials"}
+✅  If *tester* exits with code 0 the build passes; HTML & coverage
+reports are uploaded as artifacts.
 
-Items (Bearer JWT in Authorization: Bearer <token>)
-GET /items → [ { id, name, description } ]
+---
 
-GET /items/:id → { id, name, description }  / 404
+## ③ Repo Map (excerpt)
 
-POST /items  (JSON: { name, description }) → 201 { id, ... }
+```
+/
+├── docker-compose.yml          # api, web, tester
+├── backend/                    # Express  📦
+├── frontend/                   # React    💻
+└── tests/                      # Playwright
+    ├── auth.fixture.ts
+    ├── login.spec.ts
+    ├── items-crud.spec.ts
+    └── api/items.spec.ts
+```
 
-PUT /items/:id → 200 { id, ... }  / 404
+---
 
-DELETE /items/:id → 204  / 404
+## ④ Assumptions & Trade‑offs
 
-cURL Examples
+* In‑memory DB keeps compose light.  
+* Chromium‑only to minimise image size.  
+* No visual snapshots or load tests – time‑boxed.
 
-# login
-curl -X POST http://backend:5173/login \
-  -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"admin"}'
+---
 
-# get items
-curl http://backend:5173/items \
-  -H "Authorization: Bearer <JWT>"
-
-4. Front-end Routes
-
-/login — login form
-/items — list with delete button and link to create
-/items/:id/edit — edit existing item
-/items/new/edit — create new item
-
-5. Project Structure
-
-.
-├── docker-compose.yml
-├── backend/
-│   ├── Dockerfile
-│   ├── package.json
-│   ├── src/
-│   │   ├── server.js
-│   │   ├── routes/
-│   │   │   ├── login.js
-│   │   │   └── items.js
-│   │   ├── middleware/auth.js
-│   │   └── store/memoryStore.js
-│   └── docs/openapi.yaml
-└── frontend/
-    ├── Dockerfile
-    ├── package.json
-    ├── vite.config.js
-    ├── index.html
-    └── src/
-        ├── main.jsx
-        ├── App.jsx
-        ├── api/client.js
-        └── pages/
-            ├── Login.jsx
-            ├── Items.jsx
-            └── EditItem.jsx
-
-6. Common Tasks
-
-Rebuild after code changes: docker compose build --no-cache && docker compose up
-Reset data (in-memory store): simply restart the backend container
-Change ports: edit the 'ports' mapping in docker-compose.yml
-
-Minimalism preserved: clear contracts, simple structure, minimal comments. The project is easy to extend (additional fields, new entities, persistent storage, roles, etc.).
+Happy shipping!

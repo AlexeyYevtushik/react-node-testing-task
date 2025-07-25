@@ -1,34 +1,46 @@
-# Test Plan / Strategy
+# Test Plan – Docker‑only Execution
+
+| Version | Date | Author |
+|---------|------|--------|
+| 1.1 | 2025‑07‑25 | QA Candidate Alexey Yevtushik|
 
 ## 1. Scope
-We test a small web app composed of:
-- **React UI**: authentication flow and CRUD operations on “items”.
-- **Node.js API**: `/login`, `/items` (GET/POST/PUT/DELETE).
-Both positive and negative scenarios are included.
+Smoke + regression for login and item CRUD in UI & API.
 
-## 2. Coverage
+## 2. Approach
+Single **Playwright** suite is executed via the `tester`
+service in *docker‑compose*. Same command runs on CI.
 
-### UI (Functional)
-- Login with valid credentials → redirect to dashboard/items list, user greeting.
-- Login with invalid credentials → visible error message, no redirect.
-- Create a new item (form interaction, success toast/row appears).
-- Edit an existing item (inline/modal form, updated values persist).
-- Delete an item (confirmation dialog, row disappears).
-- Assertions on data presence after each action.
-- *(Bonus)* Visual regression snapshots for key screens.
+## 3. Coverage
 
-### API
-- **POST `/login`**: success returns token; invalid creds → 401 + error body.
-- **GET `/items`**: returns array (empty or populated).
-- **POST `/items`**: 201 + created object; negative cases (missing fields, no token).
-- **PUT `/items/:id`**: 200 + updated object; negative cases (invalid id/body).
-- **DELETE `/items/:id`**: 204 on success; 404 for unknown id; 401 when unauthorized.
+| Scenario                 | Path               |
+|--------------------------|--------------------|
+| Login valid / invalid    | `login.spec.ts`    |
+| Item create / blank      | `items-crud.spec`  |
+| Edit, delete, 404        | `items-crud.spec`  |
+| Raw API happy / sad      | `api/items.spec`   |
 
-## 3. Tooling & Rationale
-- **Playwright (@playwright/test)**: unified UI + API testing, fast parallel runs, built‑in trace/screenshot/video for debugging.
-- **TypeScript**: static typing, better DX.
-- *(Optional)* GitHub Actions for CI, report artifacts upload.
-toHaveScreenshot()`.
+## 4. Tooling
+| Layer | Tool                    | Reason              |
+|-------|-------------------------|---------------------|
+| UI    | Playwright (@playwright)| fast, auto‑wait     |
+| API   | Playwright request      | same runner         |
+| CI    | GitHub Actions + Compose| mirrors prod stack  |
 
-## 4. How to Run Tests
-docker-compose.exe up tests
+## 5. Execution
+
+Local: docker-compose tests
+
+CI: automatic on **push**, **PR**, or **workflow_dispatch**.
+
+## 6. Pass / Fail
+* all specs green  
+* statement coverage ≥ 80 %  
+* exit code 0 from tester container
+
+## 7. Risks & Constraints
+* State lost between runs (RAM store).  
+* Single‑thread tests – no concurrency races measured.
+
+## 8. Out of Scope
+Visual regression
