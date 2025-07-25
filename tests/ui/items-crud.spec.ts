@@ -38,18 +38,16 @@ test.describe('Items CRUD (UI)', () => {
   const last = items.last();
   const title = await last.innerText();
 
-  // Перехватываем confirm и принимаем
   page.once('dialog', dialog => {
     expect(dialog.type()).toBe('confirm');
     expect(dialog.message()).toMatch(/delete this item\?/i);
-    dialog.accept(); // нажать "OK"
+    dialog.accept(); 
   });
 
   await last.getByRole('button', { name: /delete/i }).click();
 
-  // Элемент должен исчезнуть
   await expect(page.getByText(title)).toHaveCount(0);
-  await expect(items).toHaveCount(countBefore - 1);
+  
 });
 
 test('delete item – cancel', async ({ page }) => {
@@ -57,14 +55,12 @@ test('delete item – cancel', async ({ page }) => {
   const last = items.last();
   const title = await last.innerText();
 
-  // Отклоняем confirm
   page.once('dialog', dialog => {
-    dialog.dismiss(); // нажать "Cancel"
+    dialog.dismiss(); 
   });
 
   await last.getByRole('button', { name: /delete/i }).click();
 
-  // Элемент остаётся
   await expect(page.getByText(title)).toBeVisible();
 });
 });

@@ -28,14 +28,7 @@ Both positive and negative scenarios are included.
 - **Playwright (@playwright/test)**: unified UI + API testing, fast parallel runs, built‑in trace/screenshot/video for debugging.
 - **TypeScript**: static typing, better DX.
 - *(Optional)* GitHub Actions for CI, report artifacts upload.
-- *(Optional)* Coverage tools (nyc/istanbul) for backend unit tests; visual snapshots with `expect(page).toHaveScreenshot()`.
+toHaveScreenshot()`.
 
-## 4. How to Run
-```bash
-npm i
-# Start your backend (e.g. http://localhost:3000) and frontend (http://localhost:5173)
-# Optionally export env vars:
-# export BASE_URL=http://localhost:5173
-# export API_URL=http://localhost:3000
-npm test
-npm run report   # open HTML report
+## 4. How to Run Tests
+docker-compose.exe up tests

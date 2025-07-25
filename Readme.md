@@ -7,8 +7,8 @@ Two services in Docker: backend (Node/Express, JWT, CRUD) and frontend (React/Vi
 
 docker-compose up --build -d
 
-front-end: http://localhost:5173
-back-end:  http://localhost:3000
+front-end: http://frontend:5173
+back-end:  http://backend:5173
 
 2. Environment Variables
 
@@ -40,12 +40,12 @@ DELETE /items/:id → 204  / 404
 cURL Examples
 
 # login
-curl -X POST http://localhost:3000/login \
+curl -X POST http://backend:5173/login \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"admin"}'
 
 # get items
-curl http://localhost:3000/items \
+curl http://backend:5173/items \
   -H "Authorization: Bearer <JWT>"
 
 4. Front-end Routes
