@@ -29,7 +29,7 @@ service in *docker‑compose*. Same command runs on CI.
 
 ## 5. Execution
 
-Local: docker-compose tests
+Root repository folder: docker compose up --build --force-recreate
 
 CI: automatic on **push**, **PR**, or **workflow_dispatch**.
 

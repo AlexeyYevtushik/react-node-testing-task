@@ -7,7 +7,7 @@ All tests run **inside Docker** and in GitHub Actions with one click.
 
 ## ① Run Locally (Docker Compose, < 2 min)
 
-docker-compose tests 
+docker compose up --build --force-recreate
 
 ## ② CI / CD
 
@@ -48,7 +48,6 @@ reports are uploaded as artifacts.
 
 * In‑memory DB keeps compose light.  
 * Chromium‑only to minimise image size.  
-* No visual snapshots or load tests – time‑boxed.
 
 ---
 
